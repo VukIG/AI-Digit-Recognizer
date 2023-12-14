@@ -24,7 +24,18 @@ test_loss, test_accuracy = model.evaluate(test_images,test_labels)
 
 print("Preciznost:",test_accuracy)
 
+while True:
+    index = int(input("Izaberi broj slike za testiranje (0 - 9999): "))
+    if index<0 or index >9999:
+        index = int(input("Izaberite novu vrednost izmedju 0 i 9999: "))
 
-plt.imshow(train_images[3], cmap=plt.cm.binary);
-plt.title(train_labels[3])
-plt.show()
+    img = test_images[index]
+
+    img_input = np.expand_dims(img, axis=0)
+    
+    predictions = model.predict(img_input)
+    predicted_label = np.argmax(predictions)
+
+    plt.imshow(img, cmap=plt.cm.binary)
+    plt.title(f"Model predvidja da je ovo broj: {predicted_label}, Ovo predstavlja broj: {test_labels[index]}")
+    plt.show()
